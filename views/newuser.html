@@ -12,10 +12,10 @@
 <body>
     <div class="container-login">
         <div>
-            <form class="devbook-form" id="login">
+            <form class="devbook-form" id="forminsuser">
                 <span>Entre com seus dados</span>
                 <div>
-                    <label for="email">E-Mail:</label>
+                    <label for="name">Nome:</label>
                     <input type="text" name="name" id="name" placeholder="Digite seu nome" required="required">
                 </div>
                 <div>
@@ -31,11 +31,13 @@
                     <input type="password" name="confpass" id="confpass" placeholder="Confirme sua senha"
                         required="required">
                 </div>
-                <button type="submit" class="btn-devbook" id="btn-login">Salvar</button>
-                <button type="submit" class="btn-devbook" id="btn-conta">Cancelar</button>
+                <button type="submit" class="btn-devbook" id="btn-save">Salvar</button>
+                <button type="submit" class="btn-devbook" id="btn-cancel">Cancelar</button>
             </form>
         </div>
     </div>
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/insert.js"></script>
 </body>
 
 </html>

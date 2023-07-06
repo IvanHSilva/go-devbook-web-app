@@ -12,4 +12,10 @@ var userRoutes = []Route{
 		Function:     controllers.LoadUserPage,
 		AuthRequired: false,
 	},
+	{
+		URI:          "/users",
+		Method:       http.MethodPost,
+		Function:     controllers.InsertUser,
+		AuthRequired: false,
+	},
 }
