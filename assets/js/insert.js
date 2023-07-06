@@ -20,6 +20,11 @@ function InsertUser(event) {
             pass: $('#pass').val()
             //date: today.toLocaleDateString('pt-BR')
         }
+    }).done(function () {
+        alert('Usuário cadastrado com sucesso!')
+    }).fail(function (err) {
+        console.log(err);
+        alert('Falha ao cadastrar usuário!')
     });
 }
 
