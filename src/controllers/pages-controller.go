@@ -5,10 +5,14 @@ import (
 	"web/src/utils"
 )
 
-func LoadLoginScreen(w http.ResponseWriter, r *http.Request) {
+func LoadLoginPage(w http.ResponseWriter, r *http.Request) {
 	utils.ExecuteTemplate(w, "login.html", nil)
 }
 
 func LoadUserPage(w http.ResponseWriter, r *http.Request) {
 	utils.ExecuteTemplate(w, "newuser.html", nil)
+}
+
+func LoadHomePage(w http.ResponseWriter, r *http.Request) {
+	utils.ExecuteTemplate(w, "home.html", nil)
 }

@@ -9,13 +9,13 @@ var loginRoutes = []Route{
 	{
 		URI:          "/",
 		Method:       http.MethodGet,
-		Function:     controllers.LoadLoginScreen,
+		Function:     controllers.LoadLoginPage,
 		AuthRequired: false,
 	},
 	{
 		URI:          "/login",
 		Method:       http.MethodGet,
-		Function:     controllers.LoadLoginScreen,
+		Function:     controllers.LoadLoginPage,
 		AuthRequired: false,
 	},
 	{
