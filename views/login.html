@@ -5,11 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login Devbook</title>
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/login.css">
 </head>
 
 <body>
-    <h2>Página de Login!</h2>
+    <div class="container-login">
+        <div>
+            <form class="devbook-form" id="login">
+                <span>Seja bem-vindo ao DevBook!!!</span>
+                <div>
+                    <label for="email">E-Mail:</label>
+                    <input type="text" name="email" id="email" placeholder="Digite seu e-mail" required="required">
+                </div>
+                <div>
+                    <label for="pass">Senha:</label>
+                    <input type="password" name="pass" id="pass" placeholder="Digite sua senha" required="required">
+                </div>
+                <button type="submit" class="btn-devbook" id="btn-login">Login</button>
+                <button type="submit" class="btn-devbook" id="btn-conta">Criar Conta</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
