@@ -32,7 +32,7 @@ func InsertUser(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf("%s/user/0", config.APIURL)
 	response, err := http.Post(url, "application/json", bytes.NewBuffer(user))
 	if err != nil {
-		responses.JSON(w, response.StatusCode, responses.APIError{Error: err.Error()})
+		responses.JSON(w, http.StatusInternalServerError, responses.APIError{Error: err.Error()})
 		return
 	}
 	defer response.Body.Close()
