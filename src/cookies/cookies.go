@@ -34,3 +34,18 @@ func SaveCookie(w http.ResponseWriter, id, token string) error {
 
 	return nil
 }
+
+func ReadCookie(r *http.Request) (map[string]string, error) {
+
+	cookie, err := r.Cookie("devbook")
+	if err != nil {
+		return nil, err
+	}
+
+	values := make(map[string]string)
+	if err = s.Decode("devbook", cookie.Value, &values); err != nil {
+		return nil, err
+	}
+
+	return values, nil
+}
