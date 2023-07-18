@@ -41,18 +41,11 @@
             </div>
             <div class="col-xs-12 col=sm-12 col-md-7 col-lg-7 col-xl-7">
                 {{ range .Posts }}
-                <div class="jumbotron">
-                    <h1 class="display-4">{{ .Title }}</h1>
-                    <p class="lead">{{ .Content }}</p>
-                    <a href="#">{{ .AuthorName }} - {{ .RegDate }}</a>
-                    <hr class="my-4">
-
-                    {{ if (eq .AuthorId $.UserId) }}
-                    <p>Curtir, editar, ecluir</p>
-                    {{ else }}
-                    <p>Curtir</p>
-                    {{ end }}
-                </div>
+                {{ if (eq .AuthorId $.UserId) }}
+                {{ template "posts-allowed" . }}
+                {{ else }}
+                {{ template "posts-notallowed" . }}
+                {{ end }}
                 {{ end }}
             </div>
         </div>

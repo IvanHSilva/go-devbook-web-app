@@ -1,0 +1,44 @@
+{% comment %} <div class="jumbotron">
+    {{ if (eq .AuthorId $.UserId) }}
+    <p>Curtir, editar, ecluir</p>
+    {{ else }}
+    <p>Curtir</p>
+    {{ end }}
+</div> {% endcomment %}
+
+{{ define "likes" }}
+    <a href="/edit">Editar</a>
+{{ end }}
+
+{{ define "edit" }}
+    <a href="/delete">Excluir</a>
+{{ end }}
+
+{{ define "delete" }}
+    <span>{{ .Likes }} curtidas</span>
+{{ end }}
+
+{{ define "posts-header" }}
+    <h1 class="display-4">{{ .Title }}</h1>
+    <p class="lead">{{ .Content }}</p>
+    <a href="#">{{ .AuthorName }} - {{ .RegDate.Format "02/01/2006" }}</a>
+    <hr class="my-4">
+{{ end }}
+
+{{ define "posts-allowed" }}
+    <div class="jumbotron" data-posts-id="{{ .Id }}">
+        {{ template "posts-header" . }}
+        <p>{{ template "likes" . }}</p>
+        <p>
+            {{ template "edit" }}
+            {{ template "delete" }}
+        </p>
+    </div>
+{{ end }}
+
+{{ define "posts-notallowed" }}
+    <div class="jumbotron" data-posts-id="{{ .Id }}">
+        {{ template "posts-header" . }}
+        <p>{{ template "likes" . }}</p>
+    </div>
+{{ end }}
