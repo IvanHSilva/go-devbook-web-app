@@ -7,15 +7,16 @@
 </div> {% endcomment %}
 
 {{ define "likes" }}
-    <a href="/edit">Editar</a>
+    <i class="fas fa-heart"></i>
+    <span>{{ .Likes }}</span>
 {{ end }}
 
 {{ define "edit" }}
-    <a href="/delete">Excluir</a>
+    <a href="/edit" style="text-decorarion: none;"><i class="fas fa-edit"></i></a>
 {{ end }}
 
 {{ define "delete" }}
-    <span>{{ .Likes }} curtidas</span>
+    <a href="/delete" style="text-decorarion: none;"><i class="fas fa-trash text-danger"></i></a>
 {{ end }}
 
 {{ define "posts-header" }}
@@ -28,8 +29,7 @@
 {{ define "posts-allowed" }}
     <div class="jumbotron" data-posts-id="{{ .Id }}">
         {{ template "posts-header" . }}
-        <p>{{ template "likes" . }}</p>
-        <p>
+        <p>{{ template "likes" . }}
             {{ template "edit" }}
             {{ template "delete" }}
         </p>
