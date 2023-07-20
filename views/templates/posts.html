@@ -7,7 +7,7 @@
 </div> {% endcomment %}
 
 {{ define "likes" }}
-    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart like-post" style="cursor: pointer;"></i>
     <span>{{ .Likes }}</span>
 {{ end }}
 
@@ -27,7 +27,7 @@
 {{ end }}
 
 {{ define "posts-allowed" }}
-    <div class="jumbotron" data-posts-id="{{ .Id }}">
+    <div class="jumbotron" data-post-id="{{ .Id }}">
         {{ template "posts-header" . }}
         <p>{{ template "likes" . }}
             {{ template "edit" }}
