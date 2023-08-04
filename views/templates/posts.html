@@ -12,7 +12,9 @@
 {{ end }}
 
 {{ define "edit" }}
-    <a href="/edit" style="text-decorarion: none;"><i class="fas fa-edit"></i></a>
+    <a href="/post/{{ .Id }}/edit" style="text-decorarion: none;">
+        <i class="fas fa-edit"></i>
+    </a>
 {{ end }}
 
 {{ define "delete" }}
@@ -30,8 +32,8 @@
     <div class="jumbotron" data-post-id="{{ .Id }}">
         {{ template "posts-header" . }}
         <p>{{ template "likes" . }}
-            {{ template "edit" }}
-            {{ template "delete" }}
+            {{ template "edit" . }}
+            {{ template "delete" . }}
         </p>
     </div>
 {{ end }}

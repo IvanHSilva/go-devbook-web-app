@@ -24,4 +24,10 @@ var postRoutes = []Route{
 		Function:     controllers.UnlikePost,
 		AuthRequired: true,
 	},
+	{
+		URI:          "/post/{postId}/edit",
+		Method:       http.MethodGet,
+		Function:     controllers.LoadPost,
+		AuthRequired: true,
+	},
 }
