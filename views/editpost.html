@@ -26,7 +26,7 @@
                     <textarea class="form-control" id="content" name="content"
                         placeholder="Digite o conteúdo">{{ .Content }}</textarea>
                 </div>
-                <button id="edit-post" class="btn btn-info" data-post-id="{{ .Id }}">
+                <button id="edit-post" class="btn btn-info edit-post" data-post-id="{{ .Id }}">
                     Atualizar
                 </button>
             </div>
@@ -35,6 +35,8 @@
 
     {{ template "footer" }}
     {{ template "scripts" }}
+
+    <script src="/assets/js/posts.js"></script>
 
 </body>
 

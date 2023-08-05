@@ -2,6 +2,8 @@ $('#newpost').on('submit', createPost);
 //$('.like-post').on('click', likePost);
 $(document).on('click', '.like-post', likePost);
 $(document).on('click', '.unlike-post', unlikePost);
+$(document).on('click', '.edit-post', updatePost);
+//$('#update-post').on('click', updatePost);
 
 function createPost(event) {
 
@@ -76,5 +78,29 @@ function unlikePost(event) {
         alert("Erro ao descurtir!")
     }).always(function () {
         heart.prop('disabled', false);
+    });
+}
+
+function updatePost(event) {
+    //event.preventDefault();
+    $(this).prop('disabled', true);
+
+    const postId = $(this).data('post-id');
+    //console.log(postId);
+
+    $.ajax({
+        url: `/post/${postId}`,
+        method: "PUT",
+        data: {
+            title: $('#title').val(),
+            content: $('#content').val()
+        }
+    }).done(function () {
+        alert("Atualizado com sucesso!");
+        window.location = "/home";
+    }).fail(function () {
+        alert("Erro ao atualizar!");
+    }).always(function () {
+        $('#edit-post').prop('disabled', false);
     });
 }

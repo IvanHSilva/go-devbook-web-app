@@ -30,4 +30,10 @@ var postRoutes = []Route{
 		Function:     controllers.LoadPost,
 		AuthRequired: true,
 	},
+	{
+		URI:          "/post/{postId}",
+		Method:       http.MethodPut,
+		Function:     controllers.UpdatePost,
+		AuthRequired: true,
+	},
 }
