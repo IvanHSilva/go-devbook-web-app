@@ -3,6 +3,7 @@ $('#newpost').on('submit', createPost);
 $(document).on('click', '.like-post', likePost);
 $(document).on('click', '.unlike-post', unlikePost);
 $(document).on('click', '.edit-post', updatePost);
+$(document).on('click', '.delete-post', deletePost);
 //$('#update-post').on('click', updatePost);
 
 function createPost(event) {
@@ -102,5 +103,26 @@ function updatePost(event) {
         alert("Erro ao atualizar!");
     }).always(function () {
         $('#edit-post').prop('disabled', false);
+    });
+}
+
+function deletePost(event) {
+    event.preventDefault();
+
+    const trash = $(event.target);
+    const post = trash.closest('div')
+    const postId = post.data('post-id');
+
+    trash.prop('disabled', true);
+
+    $.ajax({
+        url: `/post/${postId}`,
+        method: "DELETE",
+    }).done(function () {
+        post.fadeOut("slow", function () {
+            $(this).remove();
+        })
+    }).fail(function () {
+        alert("Erro ao excluir!");
     });
 }
