@@ -6,7 +6,7 @@ function InsertUser(event) {
     console.log("Javascript!!!")
 
     if ($('#pass').val() != $('#confpass').val()) {
-        alert('As senhas estão diferentes!')
+        Swal.fire("Erro!", "As senhas estão diferentes!", "error");
         return;
     }
 
@@ -21,10 +21,24 @@ function InsertUser(event) {
             //date: today.toLocaleDateString('pt-BR')
         }
     }).done(function () {
-        alert('Usuário cadastrado com sucesso!')
-    }).fail(function (err) {
-        console.log(err);
-        alert('Falha ao cadastrar usuário!')
+        Swal.fire("Concluído!", "Usuário cadastrado com sucesso!", "success")
+            .then(function () {
+                $.ajax({
+                    url: "/login",
+                    method: "POST",
+                    dataType: "text",
+                    data: {
+                        email: $('#email').val(),
+                        pass: $('#pass').val()
+                    }
+                }).done(function () {
+                    window.location = "/home";
+                }).fail(function () {
+                    Swal.fire("Erro!", "Falha ao fazer login!", "error");
+                })
+            })
+    }).fail(function () {
+        Swal.fire("Erro!", "Falha ao cadastrar usuário!", "error");
     });
 }
 

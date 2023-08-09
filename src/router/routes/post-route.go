@@ -7,7 +7,7 @@ import (
 
 var postRoutes = []Route{
 	{
-		URI:          "/posts",
+		URI:          "/post",
 		Method:       http.MethodPost,
 		Function:     controllers.InsertPost,
 		AuthRequired: true,

@@ -1,27 +1,28 @@
-$('#newpost').on('submit', createPost);
+//$('#newpost').on('submit', createPost);
 //$('.like-post').on('click', likePost);
+$(document).on('click', '.insert-post', insertPost);
 $(document).on('click', '.like-post', likePost);
 $(document).on('click', '.unlike-post', unlikePost);
 $(document).on('click', '.edit-post', updatePost);
 $(document).on('click', '.delete-post', deletePost);
 //$('#update-post').on('click', updatePost);
 
-function createPost(event) {
+function insertPost(event) {
 
     event.preventDefault();
 
     $.ajax({
-        url: "/posts",
+        url: "/post",
         method: "POST",
         data: {
             title: $('#title').val(),
             content: $('#content').val()
         }
     }).done(function () {
-        alert("Publicado com sucesso!");
+        Swal.fire("Concluído!", "Publicado com sucesso!", "success");
         window.location = "/home";
     }).fail(function () {
-        alert("Erro ao publicar!");
+        Swal.fire("Erro!", "Erro ao publicar!", "error");
     })
 }
 
@@ -48,7 +49,7 @@ function likePost(event) {
         heart.removeClass('like-post');
 
     }).fail(function () {
-        alert("Erro ao curtir!")
+        Swal.fire("Erro!", "Erro ao curtir!", "error");
     }).always(function () {
         heart.prop('disabled', false);
     });
@@ -76,7 +77,7 @@ function unlikePost(event) {
         heart.addClass('like-post');
 
     }).fail(function () {
-        alert("Erro ao descurtir!")
+        Swal.fire("Erro!", "Erro ao descurtir!", "error");
     }).always(function () {
         heart.prop('disabled', false);
     });
@@ -97,10 +98,11 @@ function updatePost(event) {
             content: $('#content').val()
         }
     }).done(function () {
-        alert("Atualizado com sucesso!");
-        window.location = "/home";
+        Swal.fire("Concluído!", "Atualizado com sucesso!", "success")
+            .then(function () { window.location = "/home"; })
     }).fail(function () {
-        alert("Erro ao atualizar!");
+        Swal.fire("Falhou!", "Erro ao Atualizar!", "error")
+            .then(function () { window.location = "/home"; })
     }).always(function () {
         $('#edit-post').prop('disabled', false);
     });
@@ -109,20 +111,30 @@ function updatePost(event) {
 function deletePost(event) {
     event.preventDefault();
 
-    const trash = $(event.target);
-    const post = trash.closest('div')
-    const postId = post.data('post-id');
+    Swal.fire({
+        title: "Atenção!",
+        text: "Deseja mesmo excluir esta publicação?",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        icon: "warning"
+    }).then(function (confirmation) {
+        if (!confirmation.value) return;
 
-    trash.prop('disabled', true);
+        const trash = $(event.target);
+        const post = trash.closest('div')
+        const postId = post.data('post-id');
 
-    $.ajax({
-        url: `/post/${postId}`,
-        method: "DELETE",
-    }).done(function () {
-        post.fadeOut("slow", function () {
-            $(this).remove();
-        })
-    }).fail(function () {
-        alert("Erro ao excluir!");
-    });
+        trash.prop('disabled', true);
+
+        $.ajax({
+            url: `/post/${postId}`,
+            method: "DELETE",
+        }).done(function () {
+            post.fadeOut("slow", function () {
+                $(this).remove();
+            })
+        }).fail(function () {
+            Swal.fire("Erro!", "Erro ao excluir!", "error");
+        });
+    })
 }
