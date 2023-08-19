@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"web/src/config"
 	"web/src/cookies"
 	"web/src/models"
@@ -100,4 +101,34 @@ func LoadPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	utils.ExecuteTemplate(w, "editpost.html", post)
+}
+
+func SearchUser(w http.ResponseWriter, r *http.Request) {
+
+	user := strings.ToLower(r.URL.Query().Get("user"))
+	print(user)
+	url := fmt.Sprintf("%s/user?user=%s", config.APIURL, user)
+	print(url)
+
+	response, err := requests.DoRequestWithAuth(r, http.MethodGet, url, nil)
+	if err != nil {
+		responses.JSON(w, http.StatusInternalServerError,
+			responses.APIError{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		responses.CheckStatusCode(w, response)
+		return
+	}
+
+	var users []models.User
+	if err = json.NewDecoder(response.Body).Decode(&users); err != nil {
+		responses.JSON(w, http.StatusUnprocessableEntity,
+			responses.APIError{Error: err.Error()})
+		return
+	}
+
+	utils.ExecuteTemplate(w, "users.html", users)
 }
