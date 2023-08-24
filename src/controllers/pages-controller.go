@@ -132,3 +132,16 @@ func SearchUser(w http.ResponseWriter, r *http.Request) {
 
 	utils.ExecuteTemplate(w, "users.html", users)
 }
+
+func LoadUserProfile(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	userId, err := strconv.ParseUint(params["userId"], 10, 64)
+	if err != nil {
+		responses.JSON(w, http.StatusBadRequest, responses.APIError{Error: err.Error()})
+		return
+	}
+
+	user, err := models.SearchAllUserData(userId, r)
+	fmt.Print(user, err)
+}
