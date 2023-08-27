@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - {{ .User.Name }}</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+</head>
+
+<body>
+
+    {{ template "header"}}
+
+    {{ $isFollowed := false }}
+    {{ range .User.Followers }}
+    {{ if (eq .Id $.LoggedUserId) }}
+    {{ $isFollowed = true }}
+    {{ end }}
+    {{ end }}
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-xs-12 col=sm-12 col-md-5 col-lg-5 col-xl-5">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            Perfil do Usuário
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-mut">
+                            {{ .User.Name }} - Membro desde {{ .User.RegDate.Format "02/01/2006" }}
+                        </h6>
+
+                        <p class="card-text">
+                            <a href="#">
+                                Seguidores: {{ len .User.Followers }}
+                            </a>
+                        </p>
+
+                        <p class="card-text">
+                            <a href="#">
+                                Seguindo: {{ len .User.Following }}
+                            </a>
+                        </p>
+
+                        <a href="#" class="card-link">
+                            {{ if $isFollowed }}
+                            <button id="follow" class="btn btn-info" data-user-id="{{ .User.Id }}">
+                                Seguir
+                            </button>
+                            {{ else }}
+                            <button id="stop-follow" class="btn btn-info" data-user-id="{{ .User.Id }}">
+                                Para de Seguir
+                            </button>
+                            {{ end }}
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Publicações do Usuário {{ .User.Name }}
+                    </h5>
+                    <p class="card-text">
+                        {{ range .User.Posts }}
+                        {{ template "posts-notallowed" . }}
+                        {{ else }}
+                    <p class="text-muted text-center">
+                        Sem Publicações
+                    </p>
+                    {{ end }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ template "footer"}}
+    {{ template "scripts"}}
+    <script src="/assets/js/posts.js"></script>
+</body>
+
+</html>
