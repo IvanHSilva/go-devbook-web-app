@@ -52,7 +52,7 @@
                             </button>
                             {{ else }}
                             <button id="stop-follow" class="btn btn-info" data-user-id="{{ .User.Id }}">
-                                Para de Seguir
+                                Parar de Seguir
                             </button>
                             {{ end }}
                         </a>
@@ -87,6 +87,7 @@
     {{ template "footer"}}
     {{ template "scripts"}}
     <script src="/assets/js/posts.js"></script>
+    <script src="/assets/js/user.js"></script>
 </body>
 
 </html>
