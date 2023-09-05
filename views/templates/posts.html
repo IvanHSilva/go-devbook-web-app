@@ -24,7 +24,7 @@
 {{ define "posts-header" }}
     <h1 class="display-4">{{ .Title }}</h1>
     <p class="lead">{{ .Content }}</p>
-    <a href="#">{{ .AuthorName }} - {{ .RegDate.Format "02/01/2006" }}</a>
+    <a href="/user/{{ .AuthorId }}">{{ .AuthorName }} - {{ .RegDate.Format "02/01/2006" }}</a>
     <hr class="my-4">
 {{ end }}
 
