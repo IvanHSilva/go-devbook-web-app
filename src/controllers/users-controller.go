@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 	"web/src/config"
+	"web/src/cookies"
 	"web/src/requests"
 	"web/src/responses"
 
@@ -88,6 +89,46 @@ func FollowUser(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("%s/user/%d/follow", config.APIURL, userId)
 	response, err := requests.DoRequestWithAuth(r, http.MethodPost, url, nil)
+	if err != nil {
+		responses.JSON(w, http.StatusInternalServerError,
+			responses.APIError{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		responses.CheckStatusCode(w, response)
+		return
+	}
+
+	responses.JSON(w, response.StatusCode, nil)
+}
+
+func UpdateUser(w http.ResponseWriter, r *http.Request) {
+
+	// today := time.Now()
+	// regDate := today.Format("2006-01-02T03:04:05Z")
+
+	r.ParseForm()
+
+	user, err := json.Marshal(map[string]string{
+		"name":  r.FormValue("name"),
+		"email": r.FormValue("email"),
+		// "regdate": regDate,
+	})
+
+	if err != nil {
+		responses.JSON(w, http.StatusBadRequest, responses.APIError{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.ReadCookie(r)
+	userId, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	url := fmt.Sprintf("%s/user/%d", config.APIURL, userId)
+	print(url)
+	response, err := requests.DoRequestWithAuth(r, http.MethodPut, url,
+		bytes.NewBuffer(user))
 	if err != nil {
 		responses.JSON(w, http.StatusInternalServerError,
 			responses.APIError{Error: err.Error()})

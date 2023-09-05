@@ -1,5 +1,7 @@
 $('#stop-follow').on('click', stopFollow);
 $('#follow').on('click', follow);
+$('#btn-save').on('click', save);
+$('#btn-cancel').on('click', cancel);
 
 function stopFollow() {
 
@@ -31,4 +33,30 @@ function follow() {
         Swal.fire("Falha!", "Erro ao seguir usuário!", "error");
         $('#follow').prop('disabled', false);
     });
+}
+
+function save(event) {
+
+    event.preventDefault();
+
+    $.ajax({
+        url: "/edit-user",
+        method: 'PUT',
+        data: {
+            name: $('#name').val(),
+            email: $('#email').val()
+        }
+    }).done(function () {
+        Swal.fire("Concluído!", "Usuário alterado com sucesso!", "success")
+            .then(function () {
+                window.location = "/profile";
+            });
+    }).fail(function () {
+        Swal.fire("Erro!", "Falha ao alterar usuário!", "error");
+    });
+}
+
+function cancel(event) {
+    event.preventDefault();
+    window.location = "/profile";
 }

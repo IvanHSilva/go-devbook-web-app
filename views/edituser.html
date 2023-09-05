@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Alterar Dados do Usuário</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+</head>
+
+<body>
+
+    {{ template "header"}}
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Alterar Usuário</h3>
+
+                <form id="formedituser">
+                    <span>Entre com seus dados</span>
+                    <div class="form-group">
+                        <label for="name">Nome:</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Digite seu nome"
+                            value="{{ .Name }}" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-Mail:</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Digite seu e-mail"
+                            value="{{ .EMail }}" required="required">
+                    </div>
+                    <button type="submit" class="btn-info" id="btn-save">Salvar</button>
+                    <button type="submit" class="btn-danger" id="btn-cancel">Cancelar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    {{ template "footer"}}
+    {{ template "scripts"}}
+    <script src="/assets/js/user.js"></script>
+</body>
+
+</html>

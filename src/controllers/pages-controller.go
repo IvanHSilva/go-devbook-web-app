@@ -179,3 +179,21 @@ func LoadLoggedUserProfile(w http.ResponseWriter, r *http.Request) {
 
 	utils.ExecuteTemplate(w, "profile.html", user)
 }
+
+func EditUserPage(w http.ResponseWriter, r *http.Request) {
+
+	cookie, _ := cookies.ReadCookie(r)
+	userId, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	chanel := make(chan models.User)
+	go models.SearchUserData(chanel, userId, r)
+	user := <-chanel
+
+	if userId == 0 {
+		responses.JSON(w, http.StatusInternalServerError,
+			responses.APIError{Error: "Erro ao procurar usuário"})
+		return
+	}
+
+	utils.ExecuteTemplate(w, "edituser.html", user)
+}
