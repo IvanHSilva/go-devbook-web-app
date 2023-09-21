@@ -60,4 +60,10 @@ var userRoutes = []Route{
 		Function:     controllers.UpdateUser,
 		AuthRequired: true,
 	},
+	{
+		URI:          "/update-pass",
+		Method:       http.MethodGet,
+		Function:     controllers.LoadUpdatePasswordPage,
+		AuthRequired: true,
+	},
 }

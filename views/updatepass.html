@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Atualizar Senha</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+</head>
+
+<body>
+
+    {{ template "header"}}
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Atualizar Senha</h3>
+                <form id="update-password">
+
+                    <div class="form-group">
+                        <label for="current-password">Senha Atual:</label>
+                        <input type="password" class="form-control" id="current-password" name="current-password"
+                            required="required" placeholder="Digite a senha atual">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new-password">Nova Senha:</label>
+                        <input type="password" class="form-control" id="new-password" name="new-password"
+                            required="required" placeholder="Digite a nova senha">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmar Senha:</label>
+                        <input type="password" class="form-control" id="confirm-password" name="confirm-password"
+                            required="required" placeholder="Confirma a nova senha">
+                    </div>
+
+                    <button class="btn btn-info" type="submit">
+                        Atualizar Senha
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    {{ template "footer"}}
+    {{ template "scripts"}}
+
+    <script src="/assets/js/user.js"></script>
+</body>
+
+</html>

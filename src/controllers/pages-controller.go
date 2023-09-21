@@ -197,3 +197,7 @@ func EditUserPage(w http.ResponseWriter, r *http.Request) {
 
 	utils.ExecuteTemplate(w, "edituser.html", user)
 }
+
+func LoadUpdatePasswordPage(w http.ResponseWriter, r *http.Request) {
+	utils.ExecuteTemplate(w, "updatepass.html", nil)
+}

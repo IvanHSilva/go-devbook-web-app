@@ -2,6 +2,7 @@ $('#stop-follow').on('click', stopFollow);
 $('#follow').on('click', follow);
 $('#btn-save').on('click', save);
 $('#btn-cancel').on('click', cancel);
+$('#update-password').on('click', updatePass);
 
 function stopFollow() {
 
@@ -59,4 +60,29 @@ function save(event) {
 function cancel(event) {
     event.preventDefault();
     window.location = "/profile";
+}
+
+function updatePass(event) {
+    event.preventDefault();
+
+    if ($('new-password').val() != $('confirm-password').val()) {
+        Swal.fire("Atenção!", "As senhas digitadas não são iguais!", "warning");
+        return;
+    }
+
+    $.ajax({
+        url: "/update-pass",
+        method: 'POST',
+        data: {
+            current: $('#current-password').val(),
+            new: $('#new-password').val()
+        }
+    }).done(function () {
+        Swal.fire("Concluído!", "Senha alterada com sucesso!", "success")
+            .then(function () {
+                window.location = "/profile";
+            });
+    }).fail(function () {
+        Swal.fire("Erro!", "Falha ao alterar a senha!", "error");
+    });
 }
