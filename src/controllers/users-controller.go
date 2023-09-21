@@ -143,3 +143,38 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	responses.JSON(w, response.StatusCode, nil)
 }
+
+func UpdatePassword(w http.ResponseWriter, r *http.Request) {
+
+	r.ParseForm()
+
+	passwords, err := json.Marshal(map[string]string{
+		"current": r.FormValue("current"),
+		"new":     r.FormValue("new"),
+	})
+
+	if err != nil {
+		responses.JSON(w, http.StatusBadRequest, responses.APIError{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.ReadCookie(r)
+	userId, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	url := fmt.Sprintf("%s/user/%d/update-pass", config.APIURL, userId)
+	response, err := requests.DoRequestWithAuth(r, http.MethodPut, url,
+		bytes.NewBuffer(passwords))
+	if err != nil {
+		responses.JSON(w, http.StatusInternalServerError,
+			responses.APIError{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		responses.CheckStatusCode(w, response)
+		return
+	}
+
+	responses.JSON(w, response.StatusCode, nil)
+}
