@@ -162,8 +162,30 @@ func UpdatePassword(w http.ResponseWriter, r *http.Request) {
 	userId, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
 	url := fmt.Sprintf("%s/user/%d/update-pass", config.APIURL, userId)
-	response, err := requests.DoRequestWithAuth(r, http.MethodPut, url,
+	response, err := requests.DoRequestWithAuth(r, http.MethodPost, url,
 		bytes.NewBuffer(passwords))
+	if err != nil {
+		responses.JSON(w, http.StatusInternalServerError,
+			responses.APIError{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		responses.CheckStatusCode(w, response)
+		return
+	}
+
+	responses.JSON(w, response.StatusCode, nil)
+}
+
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+
+	cookie, _ := cookies.ReadCookie(r)
+	userId, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	url := fmt.Sprintf("%s/user/%d", config.APIURL, userId)
+	response, err := requests.DoRequestWithAuth(r, http.MethodDelete, url, nil)
 	if err != nil {
 		responses.JSON(w, http.StatusInternalServerError,
 			responses.APIError{Error: err.Error()})

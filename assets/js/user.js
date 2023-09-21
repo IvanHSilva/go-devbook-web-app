@@ -3,6 +3,7 @@ $('#follow').on('click', follow);
 $('#btn-save').on('click', save);
 $('#btn-cancel').on('click', cancel);
 $('#update-password').on('click', updatePass);
+$('#delete-user').on('click', deleteUser);
 
 function stopFollow() {
 
@@ -51,7 +52,7 @@ function save(event) {
         Swal.fire("Concluído!", "Usuário alterado com sucesso!", "success")
             .then(function () {
                 window.location = "/profile";
-            });
+            })
     }).fail(function () {
         Swal.fire("Erro!", "Falha ao alterar usuário!", "error");
     });
@@ -81,8 +82,33 @@ function updatePass(event) {
         Swal.fire("Concluído!", "Senha alterada com sucesso!", "success")
             .then(function () {
                 window.location = "/profile";
-            });
+            })
     }).fail(function () {
         Swal.fire("Erro!", "Falha ao alterar a senha!", "error");
+    });
+}
+
+function deleteUser() {
+
+    Swal.fire({
+        title: "Atenção!!!",
+        text: "Deseja mesma excluir sua conta de usuário??? Você não terá mais acesso ao seus conteúdos!!!!!",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        icon: "warning"
+    }).then(function (confirm) {
+        if (confirm.value) {
+            $.ajax({
+                url: "/delete-user",
+                method: 'DELETE'
+            }).done(function () {
+                Swal.fire("Concluído!", "Conta excluída com sucesso!", "success")
+                    .then(function () {
+                        window.location = "/logout";
+                    })
+            }).fail(function () {
+                Swal.fire("Erro!", "Falha ao excluir a conta!", "error");
+            });
+        }
     });
 }
